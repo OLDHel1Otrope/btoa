@@ -103,3 +103,7 @@ show grants for user2;
 
 select * from empl;
 commit;
+
+SELECT MAX(marks) AS second_highest_marks
+FROM students
+WHERE marks < (SELECT MAX(marks) FROM students);
