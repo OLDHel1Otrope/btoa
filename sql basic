@@ -1,0 +1,88 @@
+CREATE DATABASE LabDB
+
+USE LabDB;
+
+CREATE TABLE Students (
+StudentID INT PRIMARY KEY,
+FirstName VARCHAR(50),
+LastName VARCHAR(50),
+BirthDate DATE,
+Grade INT
+)
+
+
+INSERT INTO Students (StudentID, FirstName, LastName, BirthDate, Grade)
+VALUES
+(1, 'Ganesh', 'Gaitonde', '2000-05-15', 85),
+(2, 'Urfi', 'Javed', '2001-02-28', 92),
+(3, 'Bhupendra', 'Jogi', '1999-11-10', 78);
+
+
+SELECT * FROM Students
+SELECT FirstName FROM Students;
+SELECT FirstName, Grades FROM Students;
+SELECT * FROM Students WHERE Grade > 80;
+
+SELECT * FROM Students WHERE Grade > 80 AND BirthDate > '2000
+SELECT * FROM Students WHERE Grade > 90 OR BirthDate < '2000-01-01';
+DROP TABLE Students
+
+1. % : This symbol indicates zero or more characters.
+2. _ : This symbol is used to match exactly one(single) character.
+
+SELECT * FROM Students WHERE LastName LIKE 'J%';
+SELECT * FROM Students WHERE LastName LIKE '%i';
+SELECT * FROM Students WHERE FirstName LIKE '%e%';
+SELECT * FROM Students WHERE FirstName LIKE 'T%k';
+SELECT * FROM Students WHERE FirstName LIKE '_a%';
+SELECT * FROM Students WHERE LastName LIKE '____';
+
+SELECT * FROM Students ORDER BY Grade DESC;
+SELECT * FROM Students ORDER BY Grade ASC;
+
+SELECT COUNT(*) AS StudentCount FROM Students;
+SELECT SUM(Grade) AS TotalGrade FROM Students;
+SELECT AVG(Grade) AS AverageGrade FROM Students;
+SELECT MIN(Grade) AS MinGrade FROM Students;
+SELECT MAX(Grade) AS MaxGrade FROM Students;
+
+DELETE FROM Students WHERE StudentID = 2;
+
+SELECT FirstName AS Name FROM Students
+UNION
+SELECT CourseName AS Name FROM Courses
+
+SELECT FirstName FROM Students
+EXCEPT
+SELECT Students.FirstName FROM Students
+JOIN Enrollments ON Students.StudentID = Enrollments.StudentID;
+
+SELECT column_name FROM table1 UNION ALL
+SELECT column_name FROM table2
+
+SELECT column_name FROM table1 MINUS
+SELECT column_name FROM table2;
+
+SELECT FirstName, LastName, Grade
+FROM Students
+WHERE Grade > (SELECT AVG(Grade) FROM Students);
+
+SELECT FirstName, LastName, BirthDate, Grade
+FROM Students s1
+WHERE Grade > (SELECT AVG(Grade) FROM Students s2 WHERE s2.BirthDate =
+s1.BirthDate);
+
+SELECT Students.FirstName, Students.LastName, Courses.CourseName
+FROM Students
+INNER JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+INNER JOIN Courses ON Enrollments.CourseID = Courses.CourseID;
+
+SELECT Students.FirstName, Students.LastName, Courses.CourseName
+FROM Students
+LEFT JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+LEFT JOIN Courses ON Enrollments.CourseID = Courses.CourseID;
+
+SELECT Students.FirstName, Students.LastName, Courses.CourseName
+FROM Students
+RIGHT JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+RIGHT JOIN Courses ON Enrollments.CourseID = Courses.CourseID;
