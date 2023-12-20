@@ -86,3 +86,20 @@ SELECT Students.FirstName, Students.LastName, Courses.CourseName
 FROM Students
 RIGHT JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
 RIGHT JOIN Courses ON Enrollments.CourseID = Courses.CourseID;
+
+create view view2 as select * from empl where ecity="delhi";
+
+create view view1 as select * from empl;
+select * from view1;
+
+create index index1 on empl(ecity,empname);
+
+alter table empl drop index index1
+
+table grant insert,select on empl to user2
+
+table grant all on empl to user2;
+show grants for user2;
+
+select * from empl;
+commit;
